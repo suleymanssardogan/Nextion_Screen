@@ -1,7 +1,59 @@
 # Nextion_Screen
 All_Nextion_Screen_Project
 
-**1-Gauge_Control**
+**1-Turn_On_LED_Turn_Off_LED**
+#include <SoftwareSerial.h>
+SoftwareSerial screen(2,3);
+void setup() {
+  // put your setup code here, to run once:
+
+    screen.begin(9600);
+    Serial.begin(9600);
+    pinMode(13,OUTPUT);
+
+}
+int sayac=0;
+byte data;
+bool toggle=0;
+
+void loop() {
+  
+  // put your main code here, to run repeatedly:
+  while(screen.available()>0){
+     data = screen.read();
+      if(sayac==2)
+      {
+          if(data==1)
+          {
+            if(toggle==0)
+            {
+              
+              digitalWrite(13,1);
+              Serial.println("lamba yandı");
+              toggle=1;
+            }
+            else
+            {
+              Serial.println("lamba sondu");
+              digitalWrite(13,0);
+              toggle=0;
+            }
+          }
+
+      }
+      sayac++;
+      Serial.print("Sayac: ");
+      Serial.println(sayac);
+      if(screen.available()==0)
+      {
+        Serial.println("sayac sifir");
+       sayac=0;
+      }
+  } 
+}
+
+
+**2-Gauge_Control**
 
 //Library for Nextion Screen
 #include <Nextion.h>
@@ -48,54 +100,6 @@ void loop() {
 }
 
 
-**2-Turn_On_LED_Turn_Off_LED**
-#include <SoftwareSerial.h>
-SoftwareSerial screen(2,3);
-void setup() {
-  // put your setup code here, to run once:
-
-    screen.begin(9600);
-    Serial.begin(9600);
-    pinMode(13,OUTPUT);
-
-}
-int sayac=0;
-byte data;
-bool toggle=0;
-
-void loop() {
-  
-  // put your main code here, to run repeatedly:
-  while(screen.available()>0){
-     data = screen.read();
-      if(sayac==2)
-      {
-          if(data==1)
-          {
-            if(toggle==0)
-            {
-              
-              digitalWrite(13,1);
-              Serial.println("lamba yandı");
-              toggle=1;
-            }
-            else
-            {
-              Serial.println("lamba sondu");
-              digitalWrite(13,0);
-              toggle=0;
-            }
-          }
-
-      }
-      sayac++;Serial.print("Sayac: ");Serial.println(sayac);
-      if(screen.available()==0)
-      {
-        Serial.println("sayac sifir");
-       sayac=0;
-      }
-  } 
-}
 
 **3-Write_Screen**
 #include <SoftwareSerial.h>
